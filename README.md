@@ -17,6 +17,7 @@ A real-time peer-to-peer (P2P) chat application built with [Flutter](https://flu
 
 ## Screenshots
 
+<img src="assets/screenshots/1.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/2.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/3.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/4.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/5.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/6.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/7.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/screenshots/8.png" width="200"/> &nbsp;&nbsp;&nbsp;
 <!-- Add your screenshots here -->
 <!-- ![Chat Screen](screenshots/chat_screen.png) -->
 
@@ -89,3 +90,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## Author
 
 - [AhmedAbdElrahman117](https://github.com/AhmedAbdElrahman117)
+
