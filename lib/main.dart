@@ -33,9 +33,9 @@ void main() async {
     emailTheme: EmailTheme.v3,
   );
 
-  runApp(ChatApp(
-    prefs: prefs,
-  ));
+  runApp(
+    ChatApp(prefs: prefs),
+  );
 }
 
 class ChatApp extends StatefulWidget {
@@ -64,9 +64,7 @@ class _ChatAppState extends State<ChatApp> {
             debugShowCheckedModeBanner: false,
             initialRoute: 'splash',
             routes: {
-              'splash': (context) => SplashView(
-                    prefs: widget.prefs,
-                  ),
+              'splash': (context) => SplashView(prefs: widget.prefs),
               'login': (context) => const LoginView(),
               'signup': (context) => const SignUpView(),
               'verify': (context) => const VerificationView(),
