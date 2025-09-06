@@ -8,7 +8,7 @@ import 'package:chat_app/Features/Chat/Presentation/Views/chat_view.dart';
 import 'package:chat_app/Features/Home/Presentation/Views%20Model/Chats%20Cubit/chats_cubit.dart';
 import 'package:chat_app/Features/Home/Presentation/Views%20Model/Friends%20Cubit/friends_cubit.dart';
 import 'package:chat_app/Features/Home/Presentation/Views/home_view.dart';
-import 'package:chat_app/firebase_options.dart';
+// import 'package:chat_app/firebase_options.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,8 +18,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
 
   EmailOTP.config(
     appName: 'Chat App',
@@ -40,11 +40,15 @@ class ChatApp extends StatefulWidget {
 }
 
 class _ChatAppState extends State<ChatApp> {
+  User? user;
   @override
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen(
-          (event) {},
-        );
+      (event) {
+        user = event;
+        setState(() {});
+      },
+    );
     super.initState();
   }
 
@@ -77,9 +81,8 @@ class _ChatAppState extends State<ChatApp> {
   }
 
   checkUser(BuildContext context) {
-    if (FirebaseAuth.instance.currentUser != null) {
-      BlocProvider.of<LoginCubit>(context)
-          .rememberUser(FirebaseAuth.instance.currentUser!);
+    if (user != null) {
+      BlocProvider.of<LoginCubit>(context).rememberUser(user!);
       return 'home';
     } else {
       return 'login';
