@@ -97,9 +97,9 @@ class LoginCubit extends Cubit<LoginStates> {
     );
   }
 
-  rememberUser(User user) async {
+  Future<void> rememberUser(User user) async {
     userData = UserModel(
-      name: user.displayName!,
+      name: user.displayName ?? "sss",
       email: user.email!,
       uid: user.uid,
       verified: await checkUserVerification(user.uid),

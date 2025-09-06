@@ -8,18 +8,22 @@ import 'package:chat_app/Features/Chat/Presentation/Views/chat_view.dart';
 import 'package:chat_app/Features/Home/Presentation/Views%20Model/Chats%20Cubit/chats_cubit.dart';
 import 'package:chat_app/Features/Home/Presentation/Views%20Model/Friends%20Cubit/friends_cubit.dart';
 import 'package:chat_app/Features/Home/Presentation/Views/home_view.dart';
-// import 'package:chat_app/firebase_options.dart';
+import 'package:chat_app/Features/splash.dart';
+import 'package:chat_app/firebase_options.dart';
 import 'package:email_otp/email_otp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
-      );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   EmailOTP.config(
     appName: 'Chat App',
@@ -29,29 +33,21 @@ void main() async {
     emailTheme: EmailTheme.v3,
   );
 
-  runApp(const ChatApp());
+  runApp(ChatApp(
+    prefs: prefs,
+  ));
 }
 
 class ChatApp extends StatefulWidget {
-  const ChatApp({super.key});
+  const ChatApp({super.key, required this.prefs});
+
+  final SharedPreferences prefs;
 
   @override
   State<ChatApp> createState() => _ChatAppState();
 }
 
 class _ChatAppState extends State<ChatApp> {
-  User? user;
-  @override
-  void initState() {
-    FirebaseAuth.instance.authStateChanges().listen(
-      (event) {
-        user = event;
-        setState(() {});
-      },
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -66,8 +62,11 @@ class _ChatAppState extends State<ChatApp> {
         builder: (context) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: checkUser(context),
+            initialRoute: 'splash',
             routes: {
+              'splash': (context) => SplashView(
+                    prefs: widget.prefs,
+                  ),
               'login': (context) => const LoginView(),
               'signup': (context) => const SignUpView(),
               'verify': (context) => const VerificationView(),
@@ -78,14 +77,5 @@ class _ChatAppState extends State<ChatApp> {
         },
       ),
     );
-  }
-
-  checkUser(BuildContext context) {
-    if (user != null) {
-      BlocProvider.of<LoginCubit>(context).rememberUser(user!);
-      return 'home';
-    } else {
-      return 'login';
-    }
   }
 }

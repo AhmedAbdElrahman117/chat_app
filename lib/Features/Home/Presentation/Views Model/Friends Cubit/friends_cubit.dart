@@ -45,7 +45,6 @@ class FriendsCubit extends Cubit<FriendsStates> {
             BlocProvider.of<LoginCubit>(context).userData.uid,
             userId
           ],
-          arrayContains: [],
         )
         .limit(1)
         .get();

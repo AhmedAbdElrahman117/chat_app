@@ -32,13 +32,13 @@ class SignUpCubit extends Cubit<SignUpStates> {
       )
           .then(
         (value) async {
-          await db.collection('users').doc(value.user!.uid).set(user!.toMap());
-          await value.user!.updateDisplayName(name);
           user = UserModel(
             name: name,
             email: email,
             uid: value.user!.uid,
           );
+          await db.collection('users').doc(value.user!.uid).set(user!.toMap());
+          await value.user!.updateDisplayName(name);
         },
       );
 
